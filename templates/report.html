@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>DataShadow Report</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background: #f4f7fb;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 30px;
+        }
+
+        .report-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #222;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .low {
+            color: green;
+            font-weight: bold;
+        }
+
+        .medium {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .high {
+            color: red;
+            font-weight: bold;
+        }
+
+        .critical {
+            color: darkred;
+            font-weight: bold;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .back-button:hover {
+            background: #444;
+        }
+
+    </style>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ui-refresh.css') }}">
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>🛡️ DataShadow Security Report</h1>
+
+    <div class="report-box">
+
+        {% if reports %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Filename</th>
+
+                    <th>File Size</th>
+
+                    <th>File Type</th>
+
+                    <th>Risk Score</th>
+
+                    <th>Risk Level</th>
+
+                    <th>Reason</th>
+
+                    <th>Scan Time</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for report in reports %}
+
+                <tr>
+
+                    <td>
+                        {{ report.filename }}
+                    </td>
+
+                    <td>
+                        {{ report.file_size }} bytes
+                    </td>
+
+                    <td>
+                        {{ report.file_type }}
+                    </td>
+
+                    <td>
+                        {{ report.risk_score }}/100
+                    </td>
+
+                    <td>
+
+                        {% if report.risk_level %}
+
+                            {% if report.risk_level == "LOW" %}
+
+                                <span class="low">
+                                    LOW
+                                </span>
+
+                            {% elif report.risk_level == "MEDIUM" %}
+
+                                <span class="medium">
+                                    MEDIUM
+                                </span>
+
+                            {% elif report.risk_level == "HIGH" %}
+
+                                <span class="high">
+                                    HIGH
+                                </span>
+
+                            {% elif report.risk_level == "CRITICAL" %}
+
+                                <span class="critical">
+                                    CRITICAL
+                                </span>
+
+                            {% else %}
+
+                                {{ report.risk_level }}
+
+                            {% endif %}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {% if report.reason %}
+
+                            {{ report.reason }}
+
+                        {% elif report.risk_reasons %}
+
+                            {{ report.risk_reasons }}
+
+                        {% else %}
+
+                            No suspicious activity detected
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {% if report.scan_time %}
+
+                            {{ report.scan_time }}
+
+                        {% else %}
+
+                            {{ report.created_at }}
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+            <div class="no-data">
+
+                <h3>No uploaded files found</h3>
+
+                <p>
+                    Upload a file first to generate the security report.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <a href="/dashboard"
+       class="back-button">
+
+        ← Back to Dashboard
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

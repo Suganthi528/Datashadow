@@ -1,0 +1,4 @@
+Name: Suganthi
+Email: example@gmail.com
+Phone: 9876543210
+Password: mypassword123

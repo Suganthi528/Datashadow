@@ -1,0 +1,224 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DataShadow Security Audit</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+        body {
+            background: #f4f6f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 18px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .container-box {
+            margin: 40px auto;
+            width: 95%;
+        }
+
+        .audit-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .table th {
+            background: #1f2937;
+            color: white;
+        }
+
+        .risk-low {
+            color: green;
+            font-weight: bold;
+        }
+
+        .risk-medium {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .risk-high {
+            color: red;
+            font-weight: bold;
+        }
+
+        .risk-critical {
+            color: darkred;
+            font-weight: bold;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+            color: #666;
+        }
+    </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ui-refresh.css') }}">
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🛡️ DataShadow Security Audit</h1>
+</div>
+
+<div class="container-box">
+
+    <h2 class="mb-2">
+        Security Activity Audit Log
+    </h2>
+
+    <p class="text-muted mb-4">
+        Monitor authentication events, file activity,
+        suspicious activity and automatic blocking.
+    </p>
+
+    <div class="audit-card">
+
+        {% if audit_logs and audit_logs|length > 0 %}
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Activity</th>
+                        <th>Description</th>
+                        <th>Risk Level</th>
+                        <th>IP Address</th>
+                        <th>Date & Time</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for log in audit_logs %}
+
+                    <tr>
+
+                        <td>
+                            {{ log.id }}
+                        </td>
+
+                        <td>
+                            {{ log.username }}
+                        </td>
+
+                        <td>
+                            {{ log.email }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ log.activity_type }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ log.description }}
+                        </td>
+
+                        <td>
+
+                            {% if log.risk_level == "LOW" %}
+                                <span class="risk-low">
+                                    🟢 LOW
+                                </span>
+
+                            {% elif log.risk_level == "MEDIUM" %}
+                                <span class="risk-medium">
+                                    🟡 MEDIUM
+                                </span>
+
+                            {% elif log.risk_level == "HIGH" %}
+                                <span class="risk-high">
+                                    🔴 HIGH
+                                </span>
+
+                            {% elif log.risk_level == "CRITICAL" %}
+                                <span class="risk-critical">
+                                    🚨 CRITICAL
+                                </span>
+
+                            {% else %}
+                                <strong>
+                                    {{ log.risk_level }}
+                                </strong>
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ log.ip_address }}
+                        </td>
+
+                        <td>
+                            {{ log.created_at }}
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-message">
+            🔍 No security audit events found.
+            <br>
+            <small>
+                Login, upload a file, or perform an activity
+                to generate audit records.
+            </small>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="mt-4">
+
+        <a
+            href="/security-dashboard"
+            class="btn btn-primary"
+        >
+            ← Back to Security Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

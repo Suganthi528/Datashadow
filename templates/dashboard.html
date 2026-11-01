@@ -1,0 +1,848 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>DataShadow Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- DataShadow CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        body {
+            min-height: 100vh;
+            background: #061a2f;
+            color: white;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px 15px;
+        }
+
+        .main-card {
+            background: rgba(25, 40, 60, 0.95);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 50px;
+        }
+
+        .action-card {
+            background: rgba(20, 35, 55, 0.95);
+            border-radius: 18px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .action-card h3 {
+            color: #00d9ff;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            min-height: 60px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 12px;
+        }
+
+        .feature-card {
+            background: rgba(25, 40, 60, 0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            height: 100%;
+        }
+
+        .feature-card h5 {
+            color: #00d9ff;
+        }
+
+        .table-card {
+            background: rgba(25, 40, 60, 0.95);
+            border-radius: 18px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .table-title {
+            color: #00d9ff;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th {
+            white-space: nowrap;
+        }
+
+        td {
+            vertical-align: middle;
+        }
+
+        .upload-main {
+            background: linear-gradient(135deg, #0066ff, #00bfff);
+            border: none;
+            color: white;
+        }
+
+        .upload-main:hover {
+            background: linear-gradient(135deg, #0050cc, #0099cc);
+            color: white;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding-bottom: 25px;
+        }
+
+    </style>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ui-refresh.css') }}">
+</head>
+
+
+<body>
+
+
+<div class="dashboard-container">
+
+
+    <!-- ================================================= -->
+    <!-- MAIN DASHBOARD -->
+    <!-- ================================================= -->
+
+    <div class="main-card">
+
+        <div class="text-center">
+
+            <div class="logo">
+                ☁️🛡️
+            </div>
+
+            <h1 class="text-info">
+                Welcome to DataShadow
+            </h1>
+
+            <hr>
+
+            <h4>
+                Hello, {{ username }}
+            </h4>
+
+            <p class="mt-3">
+                User Authentication Successful.
+            </p>
+
+            <p>
+                Welcome to the DataShadow Cloud Security Dashboard.
+            </p>
+
+            <p>
+                Upload files, monitor file activities,
+                analyze security risks and view security events.
+            </p>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- MAIN ACTION BUTTONS -->
+        <!-- ================================================= -->
+
+        <div class="action-card">
+
+            <h3 class="text-center">
+                🚀 DataShadow Actions
+            </h3>
+
+            <div class="row g-3">
+
+
+                <!-- UPLOAD FILE -->
+
+                <div class="col-md-6">
+
+                    <a
+                        href="{{ url_for('upload') }}"
+                        class="btn upload-main action-btn w-100">
+
+                        📁 Upload File
+
+                    </a>
+
+                </div>
+
+
+                <!-- SECURITY REPORT -->
+
+                <div class="col-md-6">
+
+                    <a
+                        href="{{ url_for('report') }}"
+                        class="btn btn-success action-btn w-100">
+
+                        📊 View Security Report
+
+                    </a>
+
+                </div>
+
+
+                <!-- SECURITY INTELLIGENCE DASHBOARD -->
+
+                <div class="col-md-6">
+
+                    <a
+                        href="{{ url_for('security_dashboard') }}"
+                        class="btn btn-warning action-btn w-100">
+
+                        🛡️ Security Intelligence Dashboard
+
+                    </a>
+
+                </div>
+
+
+                <!-- SECURITY AUDIT -->
+
+                <div class="col-md-6">
+
+                    <a
+                        href="{{ url_for('security_audit') }}"
+                        class="btn btn-info action-btn w-100">
+
+                        🔍 Security Audit
+
+                    </a>
+
+                </div>
+
+
+                <!-- SECURITY INCIDENTS -->
+
+                <div class="col-md-6">
+
+                    <a
+                        href="{{ url_for('security_incidents') }}"
+                        class="btn btn-danger action-btn w-100">
+
+                        🚨 Security Incidents
+
+                    </a>
+
+                </div>
+
+
+                <!-- LOGOUT -->
+
+                <div class="col-md-6">
+
+                    <a
+                        href="{{ url_for('logout') }}"
+                        class="btn btn-danger action-btn w-100">
+
+                        🚪 Logout
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- SECURITY FEATURES -->
+    <!-- ================================================= -->
+
+    <div class="main-card">
+
+        <h2 class="text-center text-info mb-4">
+
+            🛡️ DataShadow Security Features
+
+        </h2>
+
+
+        <div class="row g-4">
+
+
+            <!-- FILE MONITORING -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card text-center">
+
+                    <h5>
+                        📁 File Monitoring
+                    </h5>
+
+                    <p>
+                        Monitor uploaded files and
+                        automatically analyze their risk.
+                    </p>
+
+                    <a
+                        href="{{ url_for('upload') }}"
+                        class="btn btn-primary">
+
+                        Upload File
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- RISK DETECTION -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card text-center">
+
+                    <h5>
+                        ⚠️ Risk Detection
+                    </h5>
+
+                    <p>
+                        Detect Safe, Medium, High
+                        and Critical file activities.
+                    </p>
+
+                    <a
+                        href="{{ url_for('report') }}"
+                        class="btn btn-success">
+
+                        View Reports
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- USER ACTIVITY -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card text-center">
+
+                    <h5>
+                        👤 User Activity
+                    </h5>
+
+                    <p>
+                        Monitor login, logout,
+                        file upload and suspicious activities.
+                    </p>
+
+                    <a
+                        href="{{ url_for('security_audit') }}"
+                        class="btn btn-info">
+
+                        View Audit
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUSPICIOUS ACTIVITY -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card text-center">
+
+                    <h5>
+                        🚨 Suspicious Activity
+                    </h5>
+
+                    <p>
+                        Identify suspicious behavior
+                        and security incidents.
+                    </p>
+
+                    <a
+                        href="{{ url_for('security_dashboard') }}"
+                        class="btn btn-warning">
+
+                        Monitor Activity
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- AUTOMATIC BLOCKING -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card text-center">
+
+                    <h5>
+                        🚫 Automatic Blocking
+                    </h5>
+
+                    <p>
+                        Automatically block users
+                        involved in high-risk activities.
+                    </p>
+
+                    <a
+                        href="{{ url_for('security_dashboard') }}"
+                        class="btn btn-danger">
+
+                        View Security
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- SECURITY INTELLIGENCE -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card text-center">
+
+                    <h5>
+                        📊 Security Intelligence
+                    </h5>
+
+                    <p>
+                        View users, files, suspicious
+                        activities, failed logins and incidents.
+                    </p>
+
+                    <a
+                        href="{{ url_for('security_dashboard') }}"
+                        class="btn btn-dark">
+
+                        Open Dashboard
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- UPLOADED FILE REPORT -->
+    <!-- ================================================= -->
+
+    <div class="table-card">
+
+        <h3 class="text-center table-title mb-4">
+
+            📊 Uploaded Files Report
+
+        </h3>
+
+
+        <div class="table-responsive">
+
+            <table
+                class="table table-dark table-hover table-bordered">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            File Name
+                        </th>
+
+                        <th>
+                            File Type
+                        </th>
+
+                        <th>
+                            Risk Level
+                        </th>
+
+                        <th>
+                            Alert
+                        </th>
+
+                        <th>
+                            Suspicious Extension
+                        </th>
+
+                        <th>
+                            Time
+                        </th>
+
+                        <th>
+                            Download / Share
+                        </th>
+
+                        <th>
+                            Integrity
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for report in reports %}
+
+
+                    <tr>
+
+
+                        <!-- FILE NAME -->
+
+                        <td>
+                            {{ report.filename }}
+                        </td>
+
+
+                        <!-- FILE TYPE -->
+
+                        <td>
+                            {{ report.file_type }}
+                        </td>
+
+
+                        <!-- RISK LEVEL -->
+
+                        <td>
+
+                            {% if report.risk_level == "Safe" %}
+
+                                <span class="badge bg-success">
+                                    Safe
+                                </span>
+
+                            {% elif report.risk_level == "Medium" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Medium
+                                </span>
+
+                            {% elif report.risk_level == "High" %}
+
+                                <span class="badge bg-danger">
+                                    High
+                                </span>
+
+                            {% elif report.risk_level == "Critical" %}
+
+                                <span class="badge bg-danger">
+                                    Critical
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-secondary">
+                                    {{ report.risk_level }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- ALERT -->
+
+                        <td>
+                            {{ report.alert_message or "No Alert" }}
+                        </td>
+
+
+                        <!-- SUSPICIOUS EXTENSION -->
+
+                        <td>
+
+                            {% if report.suspicious_extension == "YES" %}
+
+                                <span class="badge bg-danger">
+                                    ⚠️ YES
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-success">
+                                    ✓ NO
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- TIME / TIMESTAMP -->
+
+                        <td>
+
+                            {% if report.uploaded_at %}
+
+                                {{ report.uploaded_at.strftime('%d-%m-%Y %I:%M %p') }}
+
+                            {% elif report.created_at %}
+
+                                {{ report.created_at.strftime('%d-%m-%Y %I:%M %p') }}
+
+                            {% else %}
+
+                                N/A
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- DOWNLOAD / SHARE -->
+
+                        <td>
+
+                            <!-- DOWNLOAD -->
+
+                            <a
+                                href="{{ url_for('download', file_id=report.id) }}"
+                                class="btn btn-sm btn-success mb-2">
+
+                                ⬇️ Download
+
+                            </a>
+
+
+                            <!-- SHARE -->
+
+                            <form
+                                action="{{ url_for('share_file', file_id=report.id) }}"
+                                method="POST"
+                                class="mt-2">
+
+                                <input
+                                    type="email"
+                                    name="shared_email"
+                                    class="form-control form-control-sm mb-2"
+                                    placeholder="Enter email"
+                                    required>
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-warning w-100">
+
+                                    📤 Share
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+
+                        <!-- FILE INTEGRITY -->
+
+                        <td>
+
+                            <a
+                                href="{{ url_for('check_integrity', file_id=report.id) }}"
+                                class="btn btn-sm btn-info">
+
+                                🔍 Check Integrity
+
+                            </a>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% else %}
+
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="text-center">
+
+                            No uploaded files found.
+
+                        </td>
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- PROTECTION INFORMATION -->
+    <!-- ================================================= -->
+
+    <div class="main-card mt-4">
+
+        <h3 class="text-center text-info">
+
+            🛡️ DataShadow Protection
+
+        </h3>
+
+        <p class="text-center mt-3">
+
+            DataShadow monitors file activity,
+            user activity and suspicious behavior
+            to identify potential security threats.
+
+        </p>
+
+
+        <div class="row text-center mt-4">
+
+
+            <!-- AUTHENTICATION -->
+
+            <div class="col-md-3">
+
+                <h2>
+                    🔐
+                </h2>
+
+                <p>
+                    Secure Authentication
+                </p>
+
+            </div>
+
+
+            <!-- FILE MONITORING -->
+
+            <div class="col-md-3">
+
+                <h2>
+                    📁
+                </h2>
+
+                <p>
+                    File Monitoring
+                </p>
+
+            </div>
+
+
+            <!-- THREAT DETECTION -->
+
+            <div class="col-md-3">
+
+                <h2>
+                    🚨
+                </h2>
+
+                <p>
+                    Threat Detection
+                </p>
+
+            </div>
+
+
+            <!-- AUTOMATIC BLOCKING -->
+
+            <div class="col-md-3">
+
+                <h2>
+                    🚫
+                </h2>
+
+                <p>
+                    Automatic Blocking
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- FOOTER -->
+<!-- ================================================= -->
+
+<footer class="text-center">
+
+    <p class="text-muted">
+
+        DataShadow — Privacy-First Cloud Data Exposure
+        &amp; Leakage Detection System
+
+    </p>
+
+</footer>
+
+
+<!-- ================================================= -->
+<!-- BOOTSTRAP JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>
+```

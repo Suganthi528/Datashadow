@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#07182E;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:auto;
+    position:relative;
+}
+
+/* Animated Background */
+
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-image:
+    linear-gradient(rgba(0,255,255,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,255,.08) 1px, transparent 1px);
+    background-size:50px 50px;
+    animation:gridMove 20s linear infinite;
+    pointer-events:none;
+    z-index:0;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    top:50%;
+    left:50%;
+    width:450px;
+    height:450px;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle,#00ffff55,transparent 70%);
+    border-radius:50%;
+    animation:rotateGlow 10s linear infinite;
+    pointer-events:none;
+    z-index:0;
+}
+
+@keyframes gridMove{
+    from{transform:translate(0,0);}
+    to{transform:translate(-50px,-50px);}
+}
+
+@keyframes rotateGlow{
+    from{transform:translate(-50%,-50%) rotate(0deg);}
+    to{transform:translate(-50%,-50%) rotate(360deg);}
+}
+
+/* Container */
+
+.container{
+    position:relative;
+    z-index:10;
+}
+
+/* Card */
+
+.card,
+.upload-card{
+
+    width:450px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    padding:35px;
+    border:1px solid rgba(255,255,255,.2);
+    box-shadow:0 0 25px rgba(0,255,255,.3);
+    animation:popup .8s ease;
+    position:relative;
+    z-index:10;
+}
+
+@keyframes popup{
+
+from{
+opacity:0;
+transform:translateY(50px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* Logo */
+
+.logo{
+
+font-size:70px;
+text-align:center;
+margin-bottom:15px;
+animation:floatLogo 3s infinite;
+
+}
+
+@keyframes floatLogo{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-10px);
+}
+
+}
+
+/* Text */
+
+h1,h2,h3,h4{
+
+color:#00ffff;
+text-align:center;
+margin-bottom:15px;
+
+}
+
+p{
+
+color:white;
+text-align:center;
+
+}
+
+/* Input */
+
+.form-control{
+
+height:50px;
+background:rgba(255,255,255,.1);
+border:1px solid rgba(255,255,255,.3);
+color:white;
+
+}
+
+.form-control::placeholder{
+
+color:#dddddd;
+
+}
+
+.form-control:focus{
+
+background:rgba(255,255,255,.15);
+border-color:cyan;
+color:white;
+box-shadow:0 0 15px cyan;
+
+}
+
+/* Buttons */
+
+.btn{
+
+font-weight:bold;
+border-radius:12px;
+padding:12px;
+transition:.3s;
+
+}
+
+.btn:hover{
+
+transform:translateY(-3px);
+box-shadow:0 0 20px cyan;
+
+}
+
+/* Links */
+
+a{
+
+text-decoration:none;
+
+}
+
+/* Floating Particles */
+
+.particle{
+
+position:fixed;
+width:8px;
+height:8px;
+background:cyan;
+border-radius:50%;
+animation:float 10s linear infinite;
+pointer-events:none;
+z-index:1;
+
+}
+
+.particle:nth-child(1){left:10%;animation-duration:8s;}
+.particle:nth-child(2){left:30%;animation-duration:12s;}
+.particle:nth-child(3){left:50%;animation-duration:9s;}
+.particle:nth-child(4){left:70%;animation-duration:11s;}
+.particle:nth-child(5){left:90%;animation-duration:10s;}
+
+@keyframes float{
+
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+20%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-100vh);
+opacity:0;
+}
+
+}
+
+@media(max-width:768px){
+
+.card,
+.upload-card{
+
+width:95%;
+
+}
+
+}

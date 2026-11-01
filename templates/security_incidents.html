@@ -1,0 +1,402 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Security Incidents - DataShadow</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        body {
+            min-height: 100vh;
+            background: #061a2f;
+            color: white;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: auto;
+            padding: 35px 15px;
+        }
+
+        .main-card {
+            background: rgba(25, 40, 60, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .page-title {
+            color: #00d9ff;
+            font-weight: bold;
+        }
+
+        .table-card {
+            background: rgba(15, 30, 50, 0.95);
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th {
+            white-space: nowrap;
+        }
+
+        td {
+            vertical-align: middle;
+        }
+
+        .description {
+            min-width: 300px;
+        }
+
+        .risk-critical {
+            background-color: #8b0000;
+        }
+
+        .risk-high {
+            background-color: #dc3545;
+        }
+
+        .risk-medium {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .risk-low {
+            background-color: #198754;
+        }
+
+        .status-badge {
+            background-color: #0d6efd;
+        }
+
+        .empty-message {
+            color: #9fb3c8;
+            font-size: 18px;
+            padding: 30px;
+        }
+
+        /* LOGGED-IN USER CARD */
+
+        .user-info {
+            background: rgba(0, 217, 255, 0.08);
+            border: 1px solid rgba(0, 217, 255, 0.25);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+        }
+
+        .user-info-title {
+            color: #00d9ff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .user-email {
+            color: #ffffff;
+            word-break: break-word;
+        }
+
+    </style>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ui-refresh.css') }}">
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- BACK BUTTON -->
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="btn btn-outline-light mb-4">
+
+        ← Back to Dashboard
+
+    </a>
+
+
+    <!-- MAIN CARD -->
+
+    <div class="main-card">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="text-center mb-4">
+
+            <div style="font-size: 50px;">
+                🚨
+            </div>
+
+            <h1 class="page-title">
+                Security Incident Management
+            </h1>
+
+            <p class="text-light">
+                Monitor and manage security incidents detected by DataShadow.
+            </p>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- CURRENTLY LOGGED-IN USER -->
+        <!-- ================================================= -->
+
+        <div class="user-info">
+
+            <div class="user-info-title">
+                👤 Currently Logged-In User
+            </div>
+
+            <div>
+                <strong>Username:</strong>
+                {{ username }}
+            </div>
+
+            <div class="user-email">
+                <strong>Email:</strong>
+                {{ email }}
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- INCIDENT TABLE -->
+        <!-- ================================================= -->
+
+        <div class="table-card">
+
+
+            {% if incidents %}
+
+
+            <div class="table-responsive">
+
+
+                <table
+                    class="table table-dark table-hover table-bordered">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Incident Type
+                            </th>
+
+                            <th>
+                                Username
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Risk Level
+                            </th>
+
+                            <th>
+                                Description
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Created At
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    {% for incident in incidents %}
+
+
+                        <tr>
+
+
+                            <!-- ID -->
+
+                            <td>
+                                {{ incident.id }}
+                            </td>
+
+
+                            <!-- INCIDENT TYPE -->
+
+                            <td>
+                                {{ incident.incident_type }}
+                            </td>
+
+
+                            <!-- USERNAME -->
+
+                            <td>
+                                {{ incident.username }}
+                            </td>
+
+
+                            <!-- EMAIL -->
+
+                            <td>
+                                {{ incident.email }}
+                            </td>
+
+
+                            <!-- RISK LEVEL -->
+
+                            <td>
+
+
+                                {% if incident.risk_level == "CRITICAL" %}
+
+                                    <span class="badge risk-critical">
+                                        CRITICAL
+                                    </span>
+
+
+                                {% elif incident.risk_level == "HIGH" %}
+
+                                    <span class="badge risk-high">
+                                        HIGH
+                                    </span>
+
+
+                                {% elif incident.risk_level == "MEDIUM" %}
+
+                                    <span class="badge risk-medium">
+                                        MEDIUM
+                                    </span>
+
+
+                                {% else %}
+
+                                    <span class="badge risk-low">
+                                        {{ incident.risk_level }}
+                                    </span>
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                            <!-- DESCRIPTION -->
+
+                            <td class="description">
+
+                                {{ incident.description }}
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <span class="badge status-badge">
+                                    {{ incident.status }}
+                                </span>
+
+                            </td>
+
+
+                            <!-- CREATED TIME -->
+
+                            <td>
+
+                                {% if incident.created_at %}
+
+                                    {{ incident.created_at }}
+
+                                {% else %}
+
+                                    N/A
+
+                                {% endif %}
+
+                            </td>
+
+
+                        </tr>
+
+
+                    {% endfor %}
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+            {% else %}
+
+
+                <!-- NO INCIDENTS -->
+
+                <div class="text-center empty-message">
+
+                    🚨 No security incidents detected for this user.
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```
